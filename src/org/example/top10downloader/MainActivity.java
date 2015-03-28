@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
 	
 	Button btnParse;
 	ListView listApps;
+	String xmlData;
 	
 
 	@Override
@@ -33,7 +34,9 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO to updated later
+				ParseApplications parse = new ParseApplications(xmlData);
+				boolean operationStatus = parse.process();
+				
 				
 			}
 		});
@@ -76,6 +79,7 @@ public class MainActivity extends Activity {
 		
 		protected void onPostExecute(String result) {
 			Log.d("OnPostExecute", myXmlData);
+			xmlData = myXmlData;
 		}
 
 		private String downloadXML(String theUrl) throws IOException {
