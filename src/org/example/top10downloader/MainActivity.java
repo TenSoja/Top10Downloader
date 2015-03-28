@@ -1,6 +1,9 @@
 package org.example.top10downloader;
 
+import java.io.IOException;
+
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,5 +33,19 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private class DownloadData extends AsyncTask<String, Void, String> {
+
+		@Override
+		protected String doInBackground(String... urls) {
+			try {
+				myData = downloadXML(url[0]);
+			} catch(IOException e) {
+				return "Unable to download XML file.";
+			}
+			return "";
+		}
+		
 	}
 }
