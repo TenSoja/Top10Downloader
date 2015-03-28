@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -36,6 +38,15 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				ParseApplications parse = new ParseApplications(xmlData);
 				boolean operationStatus = parse.process();
+				if(operationStatus) {
+					ArrayList<Application> allApps = parse.getApplications();
+					
+					ArrayAdapter<Application> adapter = new ArrayAdapter<Application>(MainActivity.this, R.layout.list_item, allApps);
+					listApps.setVisibility(listApps.VISIBLE);
+					listApps.setAdapter(adapter);
+				} else {
+					Log.d("MainActivity", "Error parsing file");
+				}
 				
 				
 			}
