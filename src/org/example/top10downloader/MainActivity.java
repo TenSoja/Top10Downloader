@@ -41,18 +41,21 @@ public class MainActivity extends Activity {
 	}
 	
 	private class DownloadData extends AsyncTask<String, Void, String> {
+		
+		String myXmlData;
 
 		@Override
 		protected String doInBackground(String... urls) {
 			try {
-				myData = downloadXML(url[0]);
+				myXmlData = downloadXML(urls[0]);
 			} catch(IOException e) {
 				return "Unable to download XML file.";
 			}
 			return "";
 		}
+
 		
-		private String donwloadXML(String theUrl) throws IOException {
+		private String downloadXML(String theUrl) throws IOException {
 			int BUFFER_SIZE = 2000;
 			InputStream is = null;
 			
@@ -87,8 +90,6 @@ public class MainActivity extends Activity {
 				if(is != null)
 					is.close();
 			}
-			
 		}
-		
 	}
 }
