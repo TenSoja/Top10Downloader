@@ -12,13 +12,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
+	
+	TextView textView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		textView = (TextView) findViewById(R.id.textView1);
+		
+		new DownloadData().execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml");
 	}
 
 	@Override
@@ -56,6 +62,7 @@ public class MainActivity extends Activity {
 		
 		protected void onPostExecute(String result) {
 			Log.d("OnPostExecute", myXmlData);
+			textView.setText(myXmlData);
 		}
 
 		private String downloadXML(String theUrl) throws IOException {
