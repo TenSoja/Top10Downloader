@@ -1,10 +1,14 @@
 package org.example.top10downloader;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -45,6 +49,29 @@ public class MainActivity extends Activity {
 				return "Unable to download XML file.";
 			}
 			return "";
+		}
+		
+		private String donwloadXML(String theUrl) throws IOException {
+			int BUFFER_SIZE = 2000;
+			InputStream is = null;
+			
+			String xmlContents = "";
+			try {
+				URL url = new URL(theUrl);
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setReadTimeout(10000);
+				conn.setConnectTimeout(15000);
+				conn.setRequestMethod("GET");
+				conn.setDoInput(true);
+				int response = conn.getResponseCode();
+				Log.d("DownloadXML", "The response returned is " + response);
+				
+			} finally {
+				if(is != null)
+					is.close();
+			}
+			return theUrl;
+			
 		}
 		
 	}
