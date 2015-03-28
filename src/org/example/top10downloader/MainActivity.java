@@ -2,6 +2,7 @@ package org.example.top10downloader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -65,12 +66,27 @@ public class MainActivity extends Activity {
 				conn.setDoInput(true);
 				int response = conn.getResponseCode();
 				Log.d("DownloadXML", "The response returned is " + response);
+				is = conn.getInputStream();
+				
+				InputStreamReader isr = new InputStreamReader(is);
+				int charRead;
+				char[] inputBuffer = new char[BUFFER_SIZE];
+				try {
+					while((charRead = isr.read(inputBuffer))>0) {
+						String readString = String.copyValueOf(inputBuffer, 0, charRead);
+						xmlContents += readString;
+						inputBuffer = new char[BUFFER_SIZE];
+					}
+					return xmlContents;
+				} catch(IOException e) {
+					e.printStackTrace();
+					return null;
+				}
 				
 			} finally {
 				if(is != null)
 					is.close();
 			}
-			return theUrl;
 			
 		}
 		
