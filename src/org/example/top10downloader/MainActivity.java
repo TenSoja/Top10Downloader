@@ -53,8 +53,11 @@ public class MainActivity extends Activity {
 			}
 			return "";
 		}
-
 		
+		protected void onPostExecute(String result) {
+			Log.d("OnPostExecute", myXmlData);
+		}
+
 		private String downloadXML(String theUrl) throws IOException {
 			int BUFFER_SIZE = 2000;
 			InputStream is = null;
