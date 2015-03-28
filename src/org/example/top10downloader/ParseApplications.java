@@ -51,23 +51,22 @@ public class ParseApplications {
 					
 				} else if(eventType == XmlPullParser.END_TAG) {
 					if(inEntry) {
-						applications.add(currentRecord);
-						inEntry = false;
+						if(tagname.equalsIgnoreCase("entry")) {
+							applications.add(currentRecord);
+							inEntry = false;
+						}
+						if(tagname.equalsIgnoreCase("name")) {
+							currentRecord.setName(textValue);
+						} else if(tagname.equalsIgnoreCase("artist")) {
+							currentRecord.setArtist(textValue);
+						} else if(tagname.equalsIgnoreCase("releaseDate")) {
+							currentRecord.setReleaseDate(textValue);
+						}
 					}
-					if(tagname.equalsIgnoreCase("name")) {
-						currentRecord.setName(textValue);
-					} else if(tagname.equalsIgnoreCase("artist")) {
-						currentRecord.setArtist(textValue);
-					} else if(tagname.equalsIgnoreCase("releaseDate")) {
-						currentRecord.setReleaseDate(textValue);
-					}
-					
 				}
 				
 				eventType = xpp.next();
 			}
-			
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 			operationStatus = false;
