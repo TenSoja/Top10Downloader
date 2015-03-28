@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="@+id/btnParse"
-        android:layout_below="@+id/btnParse" >
+        android:layout_below="@+id/btnParse" 
+        android:visibility="invisible">
         
     </ListView>
 
