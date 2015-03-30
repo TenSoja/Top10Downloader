@@ -2,10 +2,17 @@ package org.example.top10downloader;
 
 public class Application {
 	
+	private String image;
 	private String name;
 	private String artist;
 	private String releaseDate;
 	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	public String getName() {
 		return name;
 	}
@@ -26,7 +33,8 @@ public class Application {
 	}
 	
 	public String toString() {
-		return "name: " + this.name + "\n" +
+		return 	"image: " + this.image + "\n" +
+				"name: " + this.name + "\n" +
 			"artist: " + this.artist + "\n" +
 				"Release Date: " +  this.releaseDate + "\n";
 	}
