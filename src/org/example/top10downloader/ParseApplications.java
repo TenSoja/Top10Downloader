@@ -28,6 +28,8 @@ public class ParseApplications {
 		Application currentRecord = null;
 		boolean inEntry = false;
 		String textValue = "";
+		String tagAttributeHeight = "";
+		boolean is53 = false;
 		
 		try {
 			
@@ -41,6 +43,13 @@ public class ParseApplications {
 				
 				String tagname = xpp.getName();
 				if(eventType == XmlPullParser.START_TAG) {
+					if(tagname.equalsIgnoreCase("image")){
+						tagAttributeHeight = xpp.getAttributeValue(null, "height");
+							if(tagAttributeHeight.equals("53")) {
+								is53 = true;
+								
+							}
+					}
 					if(tagname.equalsIgnoreCase("entry")) {
 						inEntry = true;
 						currentRecord = new Application();
@@ -55,7 +64,12 @@ public class ParseApplications {
 							applications.add(currentRecord);
 							inEntry = false;
 						}
-						if(tagname.equalsIgnoreCase("name")) {
+						if(tagname.equalsIgnoreCase("image")) {
+							if(is53){
+								currentRecord.setImage(textValue);
+								is53 = false;
+							}
+						}	else if(tagname.equalsIgnoreCase("name")) {
 							currentRecord.setName(textValue);
 						} else if(tagname.equalsIgnoreCase("artist")) {
 							currentRecord.setArtist(textValue);
@@ -74,6 +88,7 @@ public class ParseApplications {
 		
 		for(Application app : applications) {
 			Log.d("LOG" , "*****************");
+			Log.d("LOG" , app.getImage());
 			Log.d("LOG" , app.getName());
 			Log.d("LOG" , app.getArtist());
 			Log.d("LOG" , app.getReleaseDate());
